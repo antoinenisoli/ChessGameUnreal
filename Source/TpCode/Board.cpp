@@ -6,22 +6,46 @@
 // Sets default values
 ABoard::ABoard()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+    RootComponent = CreateDefaultSubobject<USceneComponent>("RootComponent");
+    RootComponent->bVisualizeComponent = true;
 
+    WhiteTileInstanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>("WhiteTile");
+    BlackTileInstanced = CreateDefaultSubobject<UInstancedStaticMeshComponent>("BlackTile");
+
+    WhiteTileInstanced->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+    BlackTileInstanced->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
-// Called when the game starts or when spawned
-void ABoard::BeginPlay()
+void ABoard::Init(FIntPoint size, int assetSize, UStaticMesh* whiteTileMesh, UStaticMesh* blackTileMesh)
 {
-	Super::BeginPlay();
-	
+    Size = size;
+    AssetSize = assetSize;
+    WhiteTileMesh = whiteTileMesh;
+    BlackTileMesh = blackTileMesh;
+
+    WhiteTileInstanced->SetStaticMesh(WhiteTileMesh);
+    BlackTileInstanced->SetStaticMesh(BlackTileMesh);
+
+    GenerateBoard();
 }
 
-// Called every frame
-void ABoard::Tick(float DeltaTime)
+void ABoard::GenerateBoard()
 {
-	Super::Tick(DeltaTime);
+    WhiteTileInstanced->ClearInstances();
+    BlackTileInstanced->ClearInstances();
 
+    for (int y = 0; y < Size.Y; y++)
+    {
+        for (int x = 0; x < Size.X; x++)
+        {
+            FTransform transform;
+            transform.SetTranslation(FVector(x * AssetSize, y * AssetSize, 0));
+
+            if ((x + y) % 2 == 0)
+                BlackTileInstanced->AddInstance(transform);
+            else
+                WhiteTileInstanced->AddInstance(transform);
+        }
+    }
 }
 

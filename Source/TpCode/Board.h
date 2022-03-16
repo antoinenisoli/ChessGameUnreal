@@ -9,18 +9,31 @@
 UCLASS()
 class TPCODE_API ABoard : public AActor
 {
-	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ABoard();
+    GENERATED_BODY()
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+public:
+    ABoard();
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+    void Init(FIntPoint size, int assetSize, UStaticMesh* whiteMesh, UStaticMesh* blackMesh);
 
+    void GenerateBoard();
+
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite);
+    FIntPoint Size;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite);
+    int AssetSize;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite);
+    UInstancedStaticMeshComponent* WhiteTileInstanced;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite);
+    UInstancedStaticMeshComponent* BlackTileInstanced;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite);
+    UStaticMesh* WhiteTileMesh;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite);
+    UStaticMesh* BlackTileMesh;
 };
