@@ -1,5 +1,6 @@
 #pragma once
 #include "Pieces/Piece.h"
+#include "BoardTile.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "ChessController.generated.h"
@@ -18,4 +19,5 @@ public:
 
 public:
 	APiece* selectedPiece;
+	ABoardTile* lastTile;
 };

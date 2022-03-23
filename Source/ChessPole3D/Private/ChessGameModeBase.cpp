@@ -24,10 +24,7 @@ void AChessGameModeBase::BeginPlay()
     PlayerTwo = GetWorld()->SpawnActor<AChessPlayer>();
     PlayerTwo->Init(false, 8, 8, 100);
 
-    UStaticMesh* whiteTileMesh = LoadObject<UStaticMesh>( Board, TEXT("/Game/Meshes/WhiteTile"));
-    UStaticMesh* blackTileMesh = LoadObject<UStaticMesh>( Board, TEXT("/Game/Meshes/BlackTile"));
-    
-    Board->Init(8, 8, 100, whiteTileMesh, blackTileMesh);
+    Board->Init(8, 8, 100);
 
     SetupBoard();
     ChessController->Possess(PlayerOne);
@@ -84,6 +81,6 @@ void AChessGameModeBase::AddPiece(int iX, int iY, bool iIsWhite)
 
 FTransform AChessGameModeBase::GetPieceTransform(int iX, int iY, int iRotationDegrees)
 {
-    FVector vec ( Board->AssetSize * iX, Board->AssetSize * iY, Board->AssetSize / 2 );
-    return FTransform( FRotator( 0, iRotationDegrees, 0 ), vec, FVector( 0.25, 0.25, 0.25 ));
+    FVector vec (Board->AssetSize * iX, Board->AssetSize * iY, Board->AssetSize / 2);
+    return FTransform(FRotator(0, iRotationDegrees, 0), vec, FVector(0.25, 0.25, 0.25));
 }

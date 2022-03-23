@@ -16,7 +16,7 @@ void AChessPlayer::Init(bool isWhite, int iSizeX, int iSizeY, int iAssetSize)
 	if (!isWhite)
 		rotation = 180;
 
-	FVector vector = FVector((iSizeX * iAssetSize) / 2 - (iAssetSize / 2), (iSizeY * iAssetSize) / 2 - (iAssetSize / 2), FMath::Max(iSizeX, iSizeY) * iAssetSize);
+	FVector vector = FVector((iSizeX * iAssetSize) / 2 - (iAssetSize / 2), (iSizeY * iAssetSize) / 2 - (iAssetSize / 2), 1100);
 	FRotator rotator = FRotator(-90, -90, rotation);
 	FTransform transform = FTransform(rotator, vector);
 	RootComponent->AddWorldTransform(transform);

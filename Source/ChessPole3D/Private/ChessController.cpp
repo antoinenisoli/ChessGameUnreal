@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "BoardTile.h"
 #include "ChessController.h"
 
 AChessController::AChessController()
@@ -24,7 +24,10 @@ void AChessController::LeftClick()
 	AActor* actor = TraceResult.GetActor();
 
 	if (selectedPiece)
+	{
 		selectedPiece->Unselect();
+		selectedPiece = nullptr;
+	}
 
 	if (actor && actor->IsA(APiece::StaticClass()))
 	{
@@ -42,9 +45,21 @@ void AChessController::RightClick()
 		GetHitResultUnderCursor(ECollisionChannel::ECC_WorldDynamic, false, TraceResult);
 		AActor* actor = TraceResult.GetActor();
 
-		if (actor)
+		if (actor && actor->IsA(ABoardTile::StaticClass()))
 		{
-			UE_LOG(LogTemp, Display, TEXT("right click"));
+			ABoardTile* tile = Cast<ABoardTile>(actor);
+			if (!tile->occupied)
+			{
+				UE_LOG(LogTemp, Display, TEXT("%s"), *tile->GetFName().ToString());
+
+				FVector position = tile->GetActorLocation();
+				position.Z = selectedPiece->GetActorLocation().Z;
+
+				selectedPiece->SetActorLocation(position);
+				tile->PlacePiece(selectedPiece);
+				selectedPiece->Unselect();
+				selectedPiece = nullptr;
+			}
 		}
 	}
 }

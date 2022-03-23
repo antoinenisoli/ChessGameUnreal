@@ -19,8 +19,8 @@ public:
 
 public:
     UPROPERTY()
-    UStaticMeshComponent* PieceMesh;
+        UStaticMeshComponent* PieceMesh;
 
     UPROPERTY()
-    bool IsWhite;
+        bool IsWhite;
 };

@@ -12,10 +12,9 @@ class CHESSPOLE3D_API ABoard : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ABoard();
 
-	void Init( int iSizeX, int iSizeY, int iAssetSize, UStaticMesh* iWhiteTileMesh, UStaticMesh* iBlackTileMesh );
+	void Init(int iSizeX, int iSizeY, int iAssetSize);
 
 	void GenerateBoard();
 
@@ -28,16 +27,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int AssetSize;
-
-	UPROPERTY( EditAnywhere )
-	UInstancedStaticMeshComponent* WhiteTileInstancedMesh;
-
-    UPROPERTY(EditAnywhere)
-    UInstancedStaticMeshComponent* BlackTileInstancedMesh;
-
-	UPROPERTY()
-	UStaticMesh* WhiteTileMesh;
-
-    UPROPERTY()
-    UStaticMesh* BlackTileMesh;
 };
