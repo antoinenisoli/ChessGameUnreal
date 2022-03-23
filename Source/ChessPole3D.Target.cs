@@ -3,13 +3,13 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class TpCodeEditorTarget : TargetRules
+public class ChessPole3DTarget : TargetRules
 {
-	public TpCodeEditorTarget(TargetInfo Target) : base(Target)
+	public ChessPole3DTarget(TargetInfo Target) : base(Target)
 	{
-		Type = TargetType.Editor;
+		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 
-		ExtraModuleNames.AddRange( new string[] { "TpCode" } );
+		ExtraModuleNames.AddRange( new string[] { "ChessPole3D" } );
 	}
 }

@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TpCode.h"
+#include "ChessPole3D.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, TpCode, "TpCode" );
+IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, ChessPole3D, "ChessPole3D" );

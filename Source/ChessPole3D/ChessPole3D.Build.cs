@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class TpCode : ModuleRules
+public class ChessPole3D : ModuleRules
 {
-	public TpCode(ReadOnlyTargetRules Target) : base(Target)
+	public ChessPole3D(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	

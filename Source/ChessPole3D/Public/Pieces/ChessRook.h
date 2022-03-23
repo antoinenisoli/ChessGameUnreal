@@ -3,12 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "UPiece.generated.h"
+#include "Pieces/Piece.h"
+#include "ChessRook.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
-class TPCODE_API AUPiece : public AActor
+class CHESSPOLE3D_API AChessRook : public APiece
 {
 	GENERATED_BODY()
-
+	
 };
