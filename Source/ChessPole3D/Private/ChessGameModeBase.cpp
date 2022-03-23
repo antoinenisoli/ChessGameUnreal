@@ -1,5 +1,10 @@
 #include "ChessGameModeBase.h"
 #include "Pieces/ChessPawn.h"
+#include "Pieces/ChessRook.h"
+#include "Pieces/ChessKing.h"
+#include "Pieces/ChessBishop.h"
+#include "Pieces/ChessQueen.h"
+#include "Pieces/ChessKnight.h"
 
 void AChessGameModeBase::BeginPlay()
 {
@@ -15,23 +20,51 @@ void AChessGameModeBase::BeginPlay()
 
 void AChessGameModeBase::SetupBoard()
 {
+    //white
     for (int x = 0; x < Board->SizeX; x++)
-    {
-        AddPawn( x, 1, true);
-        AddPawn( x, 6, false);
-    }
+        AddPiece<AChessPawn>(x, 1, true);
+
+    AddPiece<AChessRook>(0, 0, true);
+    AddPiece<AChessRook>(Board->SizeX - 1, 0, true);
+
+    AddPiece<AChessKnight>(1, 0, true);
+    AddPiece<AChessKnight>(Board->SizeX - 2, 0, true);
+
+    AddPiece<AChessBishop>(2, 0, true);
+    AddPiece<AChessBishop>(Board->SizeX - 3, 0, true);
+
+    AddPiece<AChessQueen>(3, 0, true);
+
+    AddPiece<AChessKing>(Board->SizeX - 4, 0, true);
+
+    //black
+    for (int x = 0; x < Board->SizeX; x++)
+        AddPiece<AChessPawn>(x, 6, false);
+
+    AddPiece<AChessRook>(0, 7, false);
+    AddPiece<AChessRook>(Board->SizeX - 1, 7, false);
+
+    AddPiece<AChessKnight>(1, 7, false);
+    AddPiece<AChessKnight>(Board->SizeX - 2, 7, false);
+
+    AddPiece<AChessBishop>(2, 7, false);
+    AddPiece<AChessBishop>(Board->SizeX - 3, 7, false);
+
+    AddPiece<AChessQueen>(3, 7, false);
+
+    AddPiece<AChessKing>(Board->SizeX - 4, 7, false);
 }
 
-void AChessGameModeBase::AddPawn(int iX, int iY, bool iIsWhite)
+template<typename T>
+void AChessGameModeBase::AddPiece(int iX, int iY, bool iIsWhite)
 {
     int rotationDegrees = 0;
-    if( !iIsWhite )
+    if (!iIsWhite)
         rotationDegrees = 180;
 
-    APiece* piece = GetWorld()->SpawnActor<AChessPawn>(AChessPawn::StaticClass(), GetPieceTransform( iX, iY, rotationDegrees ));
-    piece->SetColor( iIsWhite );
-
-    piece->AttachToActor( Board, FAttachmentTransformRules::KeepRelativeTransform );
+    APiece* piece = GetWorld()->SpawnActor<T>(T::StaticClass(), GetPieceTransform(iX, iY, rotationDegrees));
+    piece->SetColor(iIsWhite);
+    piece->AttachToActor(Board, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 FTransform AChessGameModeBase::GetPieceTransform(int iX, int iY, int iRotationDegrees)

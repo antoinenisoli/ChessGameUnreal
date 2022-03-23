@@ -20,9 +20,10 @@ public:
 
 	void SetupBoard();
 
-	void AddPawn( int iX, int iY, bool iIsWhite );
+	template<typename T>
+	void AddPiece(int iX, int iY, bool iIsWhite);
 
-	FTransform GetPieceTransform( int iX, int iY, int iRotationDegrees );
+	FTransform GetPieceTransform(int iX, int iY, int iRotationDegrees);
 
 public:
 	UPROPERTY()

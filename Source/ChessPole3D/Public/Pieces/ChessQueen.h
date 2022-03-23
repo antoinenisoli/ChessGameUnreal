@@ -14,4 +14,6 @@ class CHESSPOLE3D_API AChessQueen : public APiece
 {
 	GENERATED_BODY()
 	
+public:
+	AChessQueen();
 };

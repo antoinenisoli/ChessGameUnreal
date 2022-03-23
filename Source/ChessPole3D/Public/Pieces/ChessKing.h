@@ -14,4 +14,6 @@ class CHESSPOLE3D_API AChessKing : public APiece
 {
 	GENERATED_BODY()
 	
+public:
+	AChessKing();
 };

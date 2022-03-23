@@ -42,7 +42,7 @@ void ABoard::GenerateBoard()
             FTransform transform;
             transform.SetTranslation( FVector( x * AssetSize, y * AssetSize, 0 ) );
 
-            if ((x + y) % 2 == 0)
+            if ((x + y) % 2 != 0)
                 BlackTileInstancedMesh->AddInstance(transform);
             else
                 WhiteTileInstancedMesh->AddInstance(transform);

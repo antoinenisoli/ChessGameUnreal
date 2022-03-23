@@ -3,3 +3,8 @@
 
 #include "Pieces/ChessBishop.h"
 
+AChessBishop::AChessBishop()
+{
+    ConstructorHelpers::FObjectFinder<UStaticMesh> staticMesh(TEXT("/Game/Meshes/Bishop"));
+    PieceMesh->SetStaticMesh(staticMesh.Object);
+}

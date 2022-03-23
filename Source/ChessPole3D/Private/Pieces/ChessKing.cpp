@@ -3,3 +3,8 @@
 
 #include "Pieces/ChessKing.h"
 
+AChessKing::AChessKing()
+{
+    ConstructorHelpers::FObjectFinder<UStaticMesh> staticMesh(TEXT("/Game/Meshes/King"));
+    PieceMesh->SetStaticMesh(staticMesh.Object);
+}

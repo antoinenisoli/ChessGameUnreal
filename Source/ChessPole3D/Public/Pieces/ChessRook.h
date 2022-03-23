@@ -14,4 +14,6 @@ class CHESSPOLE3D_API AChessRook : public APiece
 {
 	GENERATED_BODY()
 	
+public:
+	AChessRook();
 };
