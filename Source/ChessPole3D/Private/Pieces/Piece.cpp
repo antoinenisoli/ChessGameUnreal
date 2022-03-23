@@ -12,15 +12,27 @@ APiece::APiece()
 void APiece::SetColor(bool iIsWhite)
 {
     IsWhite = iIsWhite;
+    ManageMaterial();
+}
 
+void APiece::Select()
+{
+    UMaterialInterface* material = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/selectedMat"));
+    PieceMesh->SetMaterial(0, material);
+}
+
+void APiece::Unselect()
+{
+    ManageMaterial();
+}
+
+void APiece::ManageMaterial()
+{
+    UMaterialInterface* mat = nullptr;
     if (IsWhite)
-    {
-        UMaterialInterface* material = LoadObject<UMaterialInterface>( this, TEXT("/Game/Materials/WhiteTile"));
-        PieceMesh->SetMaterial(0, material);
-    }
+        mat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/WhiteTile"));
     else
-    {
-        UMaterialInterface* material = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/BlackTile"));
-        PieceMesh->SetMaterial(0, material);
-    }
+        mat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/BlackTile"));
+
+    PieceMesh->SetMaterial(0, mat);
 }

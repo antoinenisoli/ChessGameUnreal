@@ -13,6 +13,9 @@ public:
 
 public:
     void SetColor( bool iIsWhite );
+    void Select();
+    void Unselect();
+    void ManageMaterial();
 
 public:
     UPROPERTY()

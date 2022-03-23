@@ -40,7 +40,7 @@ void ABoard::GenerateBoard()
         for (int x = 0; x < SizeX; x++)
         {
             FTransform transform;
-            transform.SetTranslation( FVector( x * AssetSize, y * AssetSize, 0 ) );
+            transform.SetTranslation(FVector(x * AssetSize, y * AssetSize, 0));
 
             if ((x + y) % 2 != 0)
                 BlackTileInstancedMesh->AddInstance(transform);

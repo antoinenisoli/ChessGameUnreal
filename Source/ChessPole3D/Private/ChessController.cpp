@@ -3,6 +3,12 @@
 
 #include "ChessController.h"
 
+AChessController::AChessController()
+{
+	bShowMouseCursor = true;
+	selectedPiece = nullptr;
+}
+
 void AChessController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -13,10 +19,32 @@ void AChessController::SetupInputComponent()
 
 void AChessController::LeftClick()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Left click"));
+	FHitResult TraceResult(ForceInit);
+	GetHitResultUnderCursor(ECollisionChannel::ECC_WorldDynamic, false, TraceResult);
+	AActor* actor = TraceResult.GetActor();
+
+	if (selectedPiece)
+		selectedPiece->Unselect();
+
+	if (actor && actor->IsA(APiece::StaticClass()))
+	{
+		selectedPiece = Cast<APiece>(actor);
+		selectedPiece->Select();
+		UE_LOG(LogTemp, Display, TEXT("%s"), *selectedPiece->GetFName().ToString());
+	}
 }
 
 void AChessController::RightClick()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Right click"));
+	if (selectedPiece)
+	{
+		FHitResult TraceResult(ForceInit);
+		GetHitResultUnderCursor(ECollisionChannel::ECC_WorldDynamic, false, TraceResult);
+		AActor* actor = TraceResult.GetActor();
+
+		if (actor)
+		{
+			UE_LOG(LogTemp, Display, TEXT("right click"));
+		}
+	}
 }

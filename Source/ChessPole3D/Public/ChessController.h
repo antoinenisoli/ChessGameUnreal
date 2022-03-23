@@ -10,6 +10,7 @@ class CHESSPOLE3D_API AChessController : public APlayerController
 	GENERATED_BODY()
 
 public:
+	AChessController();
 	virtual void SetupInputComponent() override;
 
 	void LeftClick();
