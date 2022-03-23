@@ -1,8 +1,9 @@
 #pragma once
+#include "CoreMinimal.h"
+#include "Engine/StaticMeshActor.h"
+
 #include "Pieces/Piece.h"
 #include "BoardTile.h"
-#include "CoreMinimal.h"
-#include "GameFramework/PlayerController.h"
 #include "ChessController.generated.h"
 
 UCLASS()
@@ -16,8 +17,13 @@ public:
 
 	void LeftClick();
 	void RightClick();
+	void Tick(float DeltaTime);
+	void Init();
 
 public:
 	APiece* selectedPiece;
 	ABoardTile* lastTile;
+	UStaticMesh* mesh;
+	UPROPERTY()
+		AStaticMeshActor* highlightCube;
 };

@@ -1,5 +1,4 @@
 
-#include "Pieces/Piece.h"
 #include "BoardTile.h"
 
 ABoardTile::ABoardTile()

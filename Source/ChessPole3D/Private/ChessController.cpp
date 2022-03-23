@@ -1,12 +1,13 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
-#include "BoardTile.h"
 #include "ChessController.h"
 
 AChessController::AChessController()
 {
 	bShowMouseCursor = true;
 	selectedPiece = nullptr;
+
+	ConstructorHelpers::FObjectFinder<UStaticMesh> staticMesh(TEXT("/Game/Meshes/HighlightMesh"));
+	mesh = staticMesh.Object;
 }
 
 void AChessController::SetupInputComponent()
@@ -15,6 +16,17 @@ void AChessController::SetupInputComponent()
 
 	InputComponent->BindAction("LeftMouseClick", IE_Pressed, this, &AChessController::LeftClick);
 	InputComponent->BindAction("RightMouseClick", IE_Pressed, this, &AChessController::RightClick);
+}
+
+void AChessController::Init()
+{
+	highlightCube = GetWorld()->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass());
+	highlightCube->SetMobility(EComponentMobility::Movable);
+	highlightCube->SetActorScale3D(FVector(1, 1, 0.2));
+
+	UStaticMeshComponent* MeshComponent = highlightCube->GetStaticMeshComponent();
+	if (MeshComponent)
+		MeshComponent->SetStaticMesh(mesh);
 }
 
 void AChessController::LeftClick()
@@ -59,6 +71,32 @@ void AChessController::RightClick()
 				tile->PlacePiece(selectedPiece);
 				selectedPiece->Unselect();
 				selectedPiece = nullptr;
+			}
+		}
+	}
+}
+
+void AChessController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	highlightCube->SetActorHiddenInGame(selectedPiece == nullptr);
+
+	if (selectedPiece)
+	{
+		FHitResult TraceResult(ForceInit);
+		GetHitResultUnderCursor(ECollisionChannel::ECC_WorldDynamic, false, TraceResult);
+		AActor* actor = TraceResult.GetActor();
+
+		if (actor && actor->IsA(ABoardTile::StaticClass()))
+		{
+			ABoardTile* tile = Cast<ABoardTile>(actor);
+			UE_LOG(LogTemp, Warning, TEXT("%s"), *tile->GetFName().ToString());
+
+			if (highlightCube)
+			{
+				FVector pos = tile->GetActorLocation();
+				pos.Z = TraceResult.ImpactPoint.Z;
+				highlightCube->SetActorLocation(pos);
 			}
 		}
 	}

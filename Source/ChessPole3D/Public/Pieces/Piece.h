@@ -12,7 +12,7 @@ public:
     APiece();
 
 public:
-    void SetColor( bool iIsWhite );
+    void SetColor(bool iIsWhite);
     void Select();
     void Unselect();
     void ManageMaterial();

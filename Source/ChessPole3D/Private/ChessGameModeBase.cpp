@@ -27,6 +27,7 @@ void AChessGameModeBase::BeginPlay()
     Board->Init(8, 8, 100);
 
     SetupBoard();
+    ChessController->Init();
     ChessController->Possess(PlayerOne);
 }
 

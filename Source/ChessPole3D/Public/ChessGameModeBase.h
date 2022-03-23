@@ -32,5 +32,8 @@ public:
 
 public:
 	UPROPERTY()
-	ABoard* Board;
+		ABoard* Board;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int SizeX;
 };

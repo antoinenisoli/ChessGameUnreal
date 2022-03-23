@@ -20,11 +20,11 @@ public:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int SizeX;
+		int SizeX;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    int SizeY;
+		int SizeY;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int AssetSize;
+		int AssetSize;
 };
