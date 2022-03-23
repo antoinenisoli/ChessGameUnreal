@@ -5,10 +5,24 @@
 #include "Pieces/ChessBishop.h"
 #include "Pieces/ChessQueen.h"
 #include "Pieces/ChessKnight.h"
+#include "ChessPlayer.h"
+#include "ChessController.h"
+
+AChessGameModeBase::AChessGameModeBase() : Super()
+{
+    DefaultPawnClass = AChessPlayer::StaticClass();
+    PlayerControllerClass = AChessController::StaticClass();
+}
 
 void AChessGameModeBase::BeginPlay()
 {
+    ChessController = Cast<AChessController>(GetWorld()->GetFirstPlayerController());
     Board = GetWorld()->SpawnActor<ABoard>();
+
+    PlayerOne = GetWorld()->SpawnActor<AChessPlayer>();
+    PlayerOne->Init(true, 8, 8, 100);
+    PlayerTwo = GetWorld()->SpawnActor<AChessPlayer>();
+    PlayerTwo->Init(false, 8, 8, 100);
 
     UStaticMesh* whiteTileMesh = LoadObject<UStaticMesh>( Board, TEXT("/Game/Meshes/WhiteTile"));
     UStaticMesh* blackTileMesh = LoadObject<UStaticMesh>( Board, TEXT("/Game/Meshes/BlackTile"));
@@ -16,6 +30,7 @@ void AChessGameModeBase::BeginPlay()
     Board->Init(8, 8, 100, whiteTileMesh, blackTileMesh);
 
     SetupBoard();
+    ChessController->Possess(PlayerOne);
 }
 
 void AChessGameModeBase::SetupBoard()

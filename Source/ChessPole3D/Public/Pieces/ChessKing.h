@@ -6,9 +6,6 @@
 #include "Pieces/Piece.h"
 #include "ChessKing.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class CHESSPOLE3D_API AChessKing : public APiece
 {
