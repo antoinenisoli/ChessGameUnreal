@@ -25,6 +25,9 @@ public:
     void ShowMovePattern();
     virtual TArray<FMove> GetMoves();
 
+    TArray<FMove> DiagonalMoves();
+    TArray<FMove> LineMoves();
+
 public:
     int myTeam;
     TArray<FMove> moves;

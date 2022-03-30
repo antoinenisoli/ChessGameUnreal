@@ -74,3 +74,84 @@ TArray<FMove> APiece::GetMoves()
 {
     return TArray<FMove>();
 }
+
+TArray<FMove> APiece::DiagonalMoves()
+{
+    TArray<FMove> myMoves;
+    for (int i = 0; i < myBoard->SizeX; i++)
+    {
+        if (i == 0)
+            continue;
+
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X + i, myTile->coordinates.Y + i), true, false));
+        ABoardTile* nextTile = myBoard->GetTileAt(myTile->coordinates.X + i, myTile->coordinates.Y + i);
+        if (nextTile && nextTile->occupied)
+            break;
+    }
+
+    for (int i = 0; i < myBoard->SizeX; i++)
+    {
+        if (i == 0)
+            continue;
+
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X - i, myTile->coordinates.Y - i), true, false));
+        ABoardTile* nextTile = myBoard->GetTileAt(myTile->coordinates.X - i, myTile->coordinates.Y - i);
+        if (nextTile && nextTile->occupied)
+            break;
+    }
+
+    for (int i = 0; i < myBoard->SizeX; i++)
+    {
+        if (i == 0)
+            continue;
+
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X + i, myTile->coordinates.Y - i), true, false));
+        ABoardTile* nextTile = myBoard->GetTileAt(myTile->coordinates.X + i, myTile->coordinates.Y - i);
+        if (nextTile && nextTile->occupied)
+            break;
+    }
+
+    for (int i = 0; i < myBoard->SizeX; i++)
+    {
+        if (i == 0)
+            continue;
+
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X - i, myTile->coordinates.Y + i), true, false));
+        ABoardTile* nextTile = myBoard->GetTileAt(myTile->coordinates.X - i, myTile->coordinates.Y + i);
+        if (nextTile && nextTile->occupied)
+            break;
+    }
+
+    return myMoves;
+}
+
+TArray<FMove> APiece::LineMoves()
+{
+    TArray<FMove> myMoves;
+
+    for (int x = -myBoard->SizeX; x < myBoard->SizeX; x++)
+    {
+        if (x == 0)
+            continue;
+
+        ABoardTile* nextTile = myBoard->GetTileAt(myTile->coordinates.X + x, myTile->coordinates.Y);
+        if (nextTile && nextTile->occupied)
+            break;
+
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X + x, myTile->coordinates.Y), true, false));
+    }
+
+    for (int y = -myBoard->SizeY; y < myBoard->SizeY; y++)
+    {
+        if (y == 0)
+            continue;
+
+        ABoardTile* nextTile = myBoard->GetTileAt(myTile->coordinates.X, myTile->coordinates.Y + y);
+        if (nextTile && nextTile->occupied)
+            break;
+
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X, myTile->coordinates.Y + y), true, false));
+    }
+
+    return myMoves;
+}

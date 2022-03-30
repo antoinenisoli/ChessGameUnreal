@@ -36,12 +36,28 @@ void ABoard::GenerateBoard()
 
 ABoardTile* ABoard::GetTileAt(int x, int y)
 {
+    if (!InGridBounds(x, y))
+        return nullptr;
+
     for (ABoardTile* tile : tiles)
-    {
         if (tile->coordinates == FIntPoint(x, y))
             return tile;
-    }
 
     return nullptr;
+}
+
+bool ABoard::InGridBounds(int x, int y)
+{
+    if (x > SizeX)
+        return false;
+    if (x < 0)
+        return false;
+
+    if (y > SizeY)
+        return false;
+    if (y < 0)
+        return false;
+
+    return true;
 }
 

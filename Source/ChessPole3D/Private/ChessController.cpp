@@ -93,7 +93,12 @@ void AChessController::RightClick()
 
 		if (actor && actor->IsA(ABoardTile::StaticClass()))
 		{
-			ABoardTile* tile = Cast<ABoardTile>(actor);
+			ABoardTile* tile = nullptr;
+			if (actor->IsA(APiece::StaticClass()))
+				tile = Cast<APiece>(actor)->myTile;
+			else if (actor->IsA(ABoardTile::StaticClass()))
+				tile = Cast<ABoardTile>(actor);
+
 			if (tile->occupied && tile->myPiece->myTeam == selectedPiece->myTeam)
 				return;
 
@@ -102,14 +107,13 @@ void AChessController::RightClick()
 			{
 				if (move.Offset == tile->coordinates)
 				{
-					if (move.CanOnlyKill)
+					if (tile->occupied)
 					{
-						if (tile->occupied)
-						{
-							tile->myPiece->Destroy();
-							tile->PlacePiece(nullptr);
-						}
+						tile->myPiece->Destroy();
+						tile->PlacePiece(nullptr);
 					}
+					else if (move.CanOnlyKill)
+						return;
 
 					tile->PlacePiece(selectedPiece);
 					selectedPiece->SetNewTile(tile);

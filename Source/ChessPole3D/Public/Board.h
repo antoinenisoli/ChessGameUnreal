@@ -16,6 +16,7 @@ public:
 	void Init(int iSizeX, int iSizeY, int iAssetSize);
 	void GenerateBoard();
 	ABoardTile* GetTileAt(int x, int y);
+	bool InGridBounds(int x, int y);
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
