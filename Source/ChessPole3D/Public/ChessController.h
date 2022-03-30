@@ -22,6 +22,7 @@ public:
 
 public:
 	APiece* selectedPiece;
+	ABoardTile* highlightTile;
 	ABoardTile* lastTile;
 	UStaticMesh* mesh;
 	UPROPERTY()

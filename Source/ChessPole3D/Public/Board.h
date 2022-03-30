@@ -1,9 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "BoardTile.h"
 #include "Board.generated.h"
 
 UCLASS()
@@ -15,8 +14,8 @@ public:
 	ABoard();
 
 	void Init(int iSizeX, int iSizeY, int iAssetSize);
-
 	void GenerateBoard();
+	ABoardTile* GetTileAt(int x, int y);
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -27,4 +26,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int AssetSize;
+
+	TArray<ABoardTile*> tiles;
 };

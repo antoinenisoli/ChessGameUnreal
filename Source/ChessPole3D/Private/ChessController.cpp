@@ -92,6 +92,15 @@ void AChessController::Tick(float DeltaTime)
 			ABoardTile* tile = Cast<ABoardTile>(actor);
 			UE_LOG(LogTemp, Warning, TEXT("%s"), *tile->GetFName().ToString());
 
+			if (highlightTile != tile)
+			{
+				if (highlightTile)
+					highlightTile->Light(false);
+
+				highlightTile = tile;
+				highlightTile->Light(true);
+			}
+
 			if (highlightCube)
 			{
 				FVector pos = tile->GetActorLocation();

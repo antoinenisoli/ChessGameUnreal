@@ -78,6 +78,8 @@ void AChessGameModeBase::AddPiece(int iX, int iY, bool iIsWhite)
     APiece* piece = GetWorld()->SpawnActor<T>(T::StaticClass(), GetPieceTransform(iX, iY, rotationDegrees));
     piece->SetColor(iIsWhite);
     piece->AttachToActor(Board, FAttachmentTransformRules::KeepRelativeTransform);
+    piece->myBoard = Board;
+    piece->myTile = Board->GetTileAt(iX, iY);
 }
 
 FTransform AChessGameModeBase::GetPieceTransform(int iX, int iY, int iRotationDegrees)

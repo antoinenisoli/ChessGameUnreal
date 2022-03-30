@@ -16,4 +16,5 @@ class CHESSPOLE3D_API AChessRook : public APiece
 	
 public:
 	AChessRook();
+	void ShowMovePattern() override;
 };

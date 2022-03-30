@@ -5,6 +5,8 @@
 #include "GameFramework/Actor.h"
 #include "BoardTile.generated.h"
 
+class APiece;
+
 UCLASS()
 class CHESSPOLE3D_API ABoardTile : public AActor
 {
@@ -12,12 +14,19 @@ class CHESSPOLE3D_API ABoardTile : public AActor
 	
 public:	
 	ABoardTile();
-	void Spawn(FTransform transform, bool white);
+	void Spawn(FVector2D coord, FTransform transform, bool white);
 	void PlacePiece(APiece* piece);
-	FVector coordinates;
+	void Light(bool b);
+
+public:
 	bool occupied;
 	APiece* myPiece;
+	FVector2D coordinates;
 
 	UPROPERTY()
 		UStaticMeshComponent* TileMesh;
+
+private:
+	UPROPERTY()
+		UMaterialInterface* defaultMat;
 };
