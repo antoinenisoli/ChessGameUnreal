@@ -72,7 +72,7 @@ void AChessGameModeBase::SetupBoard()
 void AChessGameModeBase::SwitchPlayer()
 {
     for (ABoardTile* tile : Board->tiles)
-        tile->Light(false);
+        tile->Light(false, "");
 
     if (ChessController->GetPawn() == PlayerOne)
         ChessController->Possess(PlayerTwo);

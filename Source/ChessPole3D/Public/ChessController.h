@@ -21,6 +21,7 @@ public:
 	void HighLightTile(ABoardTile* tile);
 	void UnLightTile();
 	void Init();
+	void CheckTiles();
 	AChessPlayer* GetCurrentPlayer();
 
 	DECLARE_DELEGATE(FOnTurnEndDelegate);
@@ -34,7 +35,4 @@ public:
 	ABoardTile* highlightTile;
 	ABoardTile* lastTile;
 	UStaticMesh* mesh;
-
-	UPROPERTY()
-		AStaticMeshActor* highlightCube;
 };

@@ -27,8 +27,8 @@ void ABoardTile::Spawn(FIntPoint coord, FTransform transform, bool white)
 	}
 
 	defaultMat = TileMesh->GetMaterial(0);
-	lightMat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/HighLightedTile"));
 	movePatternMat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/MovePatternTile"));
+	killMat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/KillTile"));
 }
 
 void ABoardTile::PlacePiece(APiece* piece)
@@ -37,24 +37,18 @@ void ABoardTile::PlacePiece(APiece* piece)
 	myPiece = piece;
 }
 
-void ABoardTile::Light(bool b)
+void ABoardTile::Light(bool b, FString color)
 {
 	UMaterialInterface* mat = nullptr;
-	if (b)
-		mat = lightMat;
-	else
+	if (!b)
 		mat = defaultMat;
-
-	TileMesh->SetMaterial(0, mat);
-}
-
-void ABoardTile::ShowPattern(bool b)
-{
-	UMaterialInterface* mat = nullptr;
-	if (b)
-		mat = movePatternMat;
 	else
-		mat = defaultMat;
+	{
+		if (color == "Light")
+			mat = movePatternMat;
+		else if (color == "Kill")
+			mat = killMat;
+	}
 
 	TileMesh->SetMaterial(0, mat);
 }

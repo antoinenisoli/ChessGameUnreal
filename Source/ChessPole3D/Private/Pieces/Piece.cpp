@@ -10,6 +10,15 @@ APiece::APiece()
     PieceMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
+void APiece::SetNewTile(ABoardTile* newTile)
+{
+    myTile = newTile;
+    FVector position = myTile->GetActorLocation();
+    position.Z = GetActorLocation().Z;
+    SetActorLocation(position);
+    Unselect();
+}
+
 void APiece::SetColor(bool iIsWhite)
 {
     IsWhite = iIsWhite;
@@ -42,23 +51,37 @@ void APiece::ManageMaterial()
 void APiece::ShowMovePattern()
 {
     for (ABoardTile* tile : myBoard->tiles)
-        tile->Light(false);
+        tile->Light(false, "");
 
-    TArray<FIntPoint> targetCoordinates = GetAvailableCells();
+    moves = GetMoves();
     for (ABoardTile* tile : myBoard->tiles)
-        for (FIntPoint coord : targetCoordinates)
+        for (FMove move : moves)
         {
-            if (tile->coordinates == coord)
+            if (tile->coordinates == move.Offset)
             {
-                tile->ShowPattern(true);
+                if (move.CanOnlyKill)
+                    tile->Light(true, "Kill");
+                else
+                    tile->Light(true, "Light");
             }
         }
 }
 
-TArray<FIntPoint> APiece::GetAvailableCells()
+TArray<FMove> APiece::GetMoves()
 {
-    TArray<FIntPoint> targetCoordinates;
-    targetCoordinates.Add(FIntPoint(myTile->coordinates.X, myTile->coordinates.Y + 1));
+    TArray<FMove> myMoves;
+    if (myTeam == 0)
+    {
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X, myTile->coordinates.Y - 1), true, false));
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X + 1, myTile->coordinates.Y - 1), true, true));
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X - 1, myTile->coordinates.Y - 1), true, true));
+    }
+    else
+    {
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X, myTile->coordinates.Y + 1), true, false));
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X + 1, myTile->coordinates.Y + 1), true, true));
+        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X - 1, myTile->coordinates.Y + 1), true, true));
+    }
 
-    return targetCoordinates;
+    return myMoves;
 }

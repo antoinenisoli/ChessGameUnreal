@@ -15,8 +15,7 @@ public:
 	ABoardTile();
 	void Spawn(FIntPoint coord, FTransform transform, bool white);
 	void PlacePiece(APiece* piece);
-	void Light(bool b);
-	void ShowPattern(bool b);
+	void Light(bool b, FString color);
 
 public:
 	bool occupied;
@@ -33,4 +32,6 @@ private:
 		UMaterialInterface* lightMat;
 	UPROPERTY()
 		UMaterialInterface* movePatternMat;
+	UPROPERTY()
+		UMaterialInterface* killMat;
 };

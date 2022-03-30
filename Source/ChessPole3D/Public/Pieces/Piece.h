@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Board.h"
+#include "Move.h"
 #include "Piece.generated.h"
 
 class ABoardTile;
@@ -20,11 +21,13 @@ public:
     void Select();
     void Unselect();
     void ManageMaterial();
+    void SetNewTile(ABoardTile* newTile);
     void ShowMovePattern();
-    virtual TArray<FIntPoint> GetAvailableCells();
+    virtual TArray<FMove> GetMoves();
 
 public:
     int myTeam;
+    TArray<FMove> moves;
 
     UPROPERTY()
         ABoard* myBoard;
