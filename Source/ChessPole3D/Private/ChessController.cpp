@@ -29,12 +29,6 @@ void AChessController::Init()
 		MeshComponent->SetStaticMesh(mesh);
 }
 
-AChessController::FOnTurnEndDelegate& AChessController::OnTurnEndDelegate()
-{
-	UE_LOG(LogTemp, Display, TEXT("turn end !!"));
-	return TurnEndDeletegate;
-}
-
 void AChessController::LeftClick()
 {
 	FHitResult TraceResult(ForceInit);
@@ -49,12 +43,9 @@ void AChessController::LeftClick()
 
 	if (actor && actor->IsA(APiece::StaticClass()))
 	{
-		APiece* piece = Cast<APiece>(actor);
-		if (piece->myTeam == GetCurrentPlayer()->myTeam)
-		{
-			selectedPiece = piece;
-			selectedPiece->Select();
-		}
+		selectedPiece = Cast<APiece>(actor);
+		selectedPiece->Select();
+		UE_LOG(LogTemp, Display, TEXT("%s"), *selectedPiece->GetFName().ToString());
 	}
 }
 
@@ -71,17 +62,13 @@ void AChessController::RightClick()
 			ABoardTile* tile = Cast<ABoardTile>(actor);
 			if (!tile->occupied)
 			{
-				UE_LOG(LogTemp, Display, TEXT("%s"), *tile->GetFName().ToString());
-
-				FVector position = tile->GetActorLocation();
-				position.Z = selectedPiece->GetActorLocation().Z;
-
-				selectedPiece->SetActorLocation(position);
+				selectedPiece->SetNewTile(tile);
 				tile->PlacePiece(selectedPiece);
-				selectedPiece->Unselect();
 				selectedPiece = nullptr;
-				
+<<<<<<< Updated upstream
+=======
 				TurnEndDeletegate.ExecuteIfBound();
+>>>>>>> Stashed changes
 			}
 		}
 	}
@@ -98,44 +85,17 @@ void AChessController::Tick(float DeltaTime)
 		GetHitResultUnderCursor(ECollisionChannel::ECC_WorldDynamic, false, TraceResult);
 		AActor* actor = TraceResult.GetActor();
 
-		if (actor)
+		if (actor && actor->IsA(ABoardTile::StaticClass()))
 		{
-			ABoardTile* tile = nullptr;
-			if (actor->IsA(APiece::StaticClass()))
-				tile = Cast<APiece>(actor)->myTile;
-			else if (actor->IsA(ABoardTile::StaticClass()))
-				tile = Cast<ABoardTile>(actor);
+			ABoardTile* tile = Cast<ABoardTile>(actor);
+			UE_LOG(LogTemp, Warning, TEXT("%s"), *tile->GetFName().ToString());
 
-			if (tile && highlightTile != tile)
-				HighLightTile(tile);
+			if (highlightCube)
+			{
+				FVector pos = tile->GetActorLocation();
+				pos.Z = TraceResult.ImpactPoint.Z;
+				highlightCube->SetActorLocation(pos);
+			}
 		}
-		else
-			UnLightTile();
-	}
-	else 
-		UnLightTile();
-}
-
-AChessPlayer* AChessController::GetCurrentPlayer()
-{
-	return Cast<AChessPlayer>(GetPawn());
-}
-
-void AChessController::HighLightTile(ABoardTile* tile)
-{
-	if (highlightTile)
-		highlightTile->Light(false);
-
-	highlightTile = tile;
-	highlightTile->Light(true);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *tile->GetFName().ToString());
-}
-
-void AChessController::UnLightTile()
-{
-	if (highlightTile)
-	{
-		highlightTile->Light(false);
-		highlightTile = nullptr;
 	}
 }

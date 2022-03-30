@@ -1,11 +1,7 @@
 #pragma once
-
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Board.h"
 #include "Piece.generated.h"
-
-class ABoardTile;
 
 UCLASS(Abstract)
 class CHESSPOLE3D_API APiece : public AActor
@@ -20,18 +16,14 @@ public:
     void Select();
     void Unselect();
     void ManageMaterial();
+<<<<<<< Updated upstream
+=======
+    void SetNewTile(ABoardTile* newTile);
     void ShowMovePattern();
     virtual TArray<FIntPoint> GetAvailableCells();
+>>>>>>> Stashed changes
 
 public:
-    int myTeam;
-
-    UPROPERTY()
-        ABoard* myBoard;
-
-    UPROPERTY()
-        ABoardTile* myTile;
-
     UPROPERTY()
         UStaticMeshComponent* PieceMesh;
 
