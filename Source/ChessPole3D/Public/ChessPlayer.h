@@ -15,6 +15,8 @@ public:
 	AChessPlayer();
 	void Init(bool isWhite, int iSizeX, int iSizeY, int iAssetSize);
 
-UPROPERTY()
-	UCameraComponent* Camera;
+public:
+	int myTeam;
+	UPROPERTY()
+		UCameraComponent* Camera;
 };

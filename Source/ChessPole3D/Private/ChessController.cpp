@@ -29,6 +29,12 @@ void AChessController::Init()
 		MeshComponent->SetStaticMesh(mesh);
 }
 
+AChessController::FOnTurnEndDelegate& AChessController::OnTurnEndDelegate()
+{
+	UE_LOG(LogTemp, Display, TEXT("turn end !!"));
+	return TurnEndDeletegate;
+}
+
 void AChessController::LeftClick()
 {
 	FHitResult TraceResult(ForceInit);
@@ -43,9 +49,12 @@ void AChessController::LeftClick()
 
 	if (actor && actor->IsA(APiece::StaticClass()))
 	{
-		selectedPiece = Cast<APiece>(actor);
-		selectedPiece->Select();
-		UE_LOG(LogTemp, Display, TEXT("%s"), *selectedPiece->GetFName().ToString());
+		APiece* piece = Cast<APiece>(actor);
+		if (piece->myTeam == GetCurrentPlayer()->myTeam)
+		{
+			selectedPiece = piece;
+			selectedPiece->Select();
+		}
 	}
 }
 
@@ -71,6 +80,8 @@ void AChessController::RightClick()
 				tile->PlacePiece(selectedPiece);
 				selectedPiece->Unselect();
 				selectedPiece = nullptr;
+				
+				TurnEndDeletegate.ExecuteIfBound();
 			}
 		}
 	}
@@ -103,6 +114,11 @@ void AChessController::Tick(float DeltaTime)
 	}
 	else 
 		UnLightTile();
+}
+
+AChessPlayer* AChessController::GetCurrentPlayer()
+{
+	return Cast<AChessPlayer>(GetPawn());
 }
 
 void AChessController::HighLightTile(ABoardTile* tile)

@@ -44,22 +44,21 @@ void APiece::ShowMovePattern()
     for (ABoardTile* tile : myBoard->tiles)
         tile->Light(false);
 
-    TArray<FVector2D> targetCoordinates = GetAvailableCells();
+    TArray<FIntPoint> targetCoordinates = GetAvailableCells();
     for (ABoardTile* tile : myBoard->tiles)
-        for (FVector2D coord : targetCoordinates)
+        for (FIntPoint coord : targetCoordinates)
         {
             if (tile->coordinates == coord)
             {
-                UE_LOG(LogTemp, Display, TEXT("%s"), *tile->GetFName().ToString());
                 tile->ShowPattern(true);
             }
         }
 }
 
-TArray<FVector2D> APiece::GetAvailableCells()
+TArray<FIntPoint> APiece::GetAvailableCells()
 {
-    TArray<FVector2D> targetCoordinates;
-    targetCoordinates.Add(FVector2D(myTile->coordinates.X, myTile->coordinates.Y + 1));
+    TArray<FIntPoint> targetCoordinates;
+    targetCoordinates.Add(FIntPoint(myTile->coordinates.X, myTile->coordinates.Y + 1));
 
     return targetCoordinates;
 }

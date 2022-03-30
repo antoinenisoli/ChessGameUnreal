@@ -27,7 +27,7 @@ void ABoard::GenerateBoard()
             transform.SetTranslation(FVector(x * AssetSize, y * AssetSize, 0));
 
             bool white = (x + y) % 2 != 0;
-            FVector2D coord = FVector2D(x, y);
+            FIntPoint coord = FIntPoint(x, y);
             newTile->Spawn(coord, transform, white);
             tiles.Add(newTile);
         }
@@ -38,7 +38,7 @@ ABoardTile* ABoard::GetTileAt(int x, int y)
 {
     for (ABoardTile* tile : tiles)
     {
-        if (tile->coordinates == FVector2D(x, y))
+        if (tile->coordinates == FIntPoint(x, y))
             return tile;
     }
 

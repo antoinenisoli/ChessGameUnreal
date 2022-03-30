@@ -10,7 +10,7 @@ ABoardTile::ABoardTile()
 	TileMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
-void ABoardTile::Spawn(FVector2D coord, FTransform transform, bool white)
+void ABoardTile::Spawn(FIntPoint coord, FTransform transform, bool white)
 {
 	coordinates = coord;
 	this->SetActorTransform(transform);

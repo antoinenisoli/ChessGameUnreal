@@ -21,9 +21,11 @@ public:
     void Unselect();
     void ManageMaterial();
     void ShowMovePattern();
-    virtual TArray<FVector2D> GetAvailableCells();
+    virtual TArray<FIntPoint> GetAvailableCells();
 
 public:
+    int myTeam;
+
     UPROPERTY()
         ABoard* myBoard;
 

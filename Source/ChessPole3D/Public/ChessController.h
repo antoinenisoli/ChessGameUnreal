@@ -1,7 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Engine/StaticMeshActor.h"
-
+#include "ChessPlayer.h"
 #include "Pieces/Piece.h"
 #include "BoardTile.h"
 #include "ChessController.generated.h"
@@ -21,12 +21,20 @@ public:
 	void HighLightTile(ABoardTile* tile);
 	void UnLightTile();
 	void Init();
+	AChessPlayer* GetCurrentPlayer();
+
+	DECLARE_DELEGATE(FOnTurnEndDelegate);
+	FOnTurnEndDelegate& OnTurnEndDelegate();
+
+private:
+	FOnTurnEndDelegate TurnEndDeletegate;
 
 public:
 	APiece* selectedPiece;
 	ABoardTile* highlightTile;
 	ABoardTile* lastTile;
 	UStaticMesh* mesh;
+
 	UPROPERTY()
 		AStaticMeshActor* highlightCube;
 };

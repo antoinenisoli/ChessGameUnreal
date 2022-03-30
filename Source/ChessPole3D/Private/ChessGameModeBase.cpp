@@ -17,6 +17,7 @@ AChessGameModeBase::AChessGameModeBase() : Super()
 void AChessGameModeBase::BeginPlay()
 {
     ChessController = Cast<AChessController>(GetWorld()->GetFirstPlayerController());
+    ChessController->OnTurnEndDelegate().BindUObject(this, &AChessGameModeBase::SwitchPlayer);
     Board = GetWorld()->SpawnActor<ABoard>();
 
     PlayerOne = GetWorld()->SpawnActor<AChessPlayer>();
@@ -68,6 +69,19 @@ void AChessGameModeBase::SetupBoard()
     AddPiece<AChessKing>(Board->SizeX - 4, 7, false);
 }
 
+void AChessGameModeBase::SwitchPlayer()
+{
+    for (ABoardTile* tile : Board->tiles)
+        tile->Light(false);
+
+    if (ChessController->GetPawn() == PlayerOne)
+        ChessController->Possess(PlayerTwo);
+    else if (ChessController->GetPawn() == PlayerTwo)
+        ChessController->Possess(PlayerOne);
+
+    UE_LOG(LogTemp, Display, TEXT("switch to player %s"), *ChessController->GetCurrentPlayer()->GetFName().ToString());
+}
+
 template<typename T>
 void AChessGameModeBase::AddPiece(int iX, int iY, bool iIsWhite)
 {
@@ -80,6 +94,7 @@ void AChessGameModeBase::AddPiece(int iX, int iY, bool iIsWhite)
     piece->AttachToActor(Board, FAttachmentTransformRules::KeepRelativeTransform);
     piece->myBoard = Board;
     piece->myTile = Board->GetTileAt(iX, iY);
+    piece->myTeam = iIsWhite;
 }
 
 FTransform AChessGameModeBase::GetPieceTransform(int iX, int iY, int iRotationDegrees)

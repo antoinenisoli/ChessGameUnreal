@@ -13,7 +13,7 @@ class CHESSPOLE3D_API ABoardTile : public AActor
 	
 public:	
 	ABoardTile();
-	void Spawn(FVector2D coord, FTransform transform, bool white);
+	void Spawn(FIntPoint coord, FTransform transform, bool white);
 	void PlacePiece(APiece* piece);
 	void Light(bool b);
 	void ShowPattern(bool b);
@@ -21,7 +21,7 @@ public:
 public:
 	bool occupied;
 	APiece* myPiece;
-	FVector2D coordinates;
+	FIntPoint coordinates;
 
 	UPROPERTY()
 		UStaticMeshComponent* TileMesh;
