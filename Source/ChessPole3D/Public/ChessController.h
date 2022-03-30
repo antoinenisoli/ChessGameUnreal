@@ -18,6 +18,8 @@ public:
 	void LeftClick();
 	void RightClick();
 	void Tick(float DeltaTime);
+	void HighLightTile(ABoardTile* tile);
+	void UnLightTile();
 	void Init();
 
 public:

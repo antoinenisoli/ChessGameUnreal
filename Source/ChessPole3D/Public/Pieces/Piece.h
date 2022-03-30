@@ -5,6 +5,8 @@
 #include "Board.h"
 #include "Piece.generated.h"
 
+class ABoardTile;
+
 UCLASS(Abstract)
 class CHESSPOLE3D_API APiece : public AActor
 {
@@ -18,7 +20,8 @@ public:
     void Select();
     void Unselect();
     void ManageMaterial();
-    virtual void ShowMovePattern();
+    void ShowMovePattern();
+    virtual TArray<FVector2D> GetAvailableCells();
 
 public:
     UPROPERTY()

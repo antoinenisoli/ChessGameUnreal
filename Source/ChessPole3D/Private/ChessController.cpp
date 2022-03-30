@@ -87,26 +87,39 @@ void AChessController::Tick(float DeltaTime)
 		GetHitResultUnderCursor(ECollisionChannel::ECC_WorldDynamic, false, TraceResult);
 		AActor* actor = TraceResult.GetActor();
 
-		if (actor && actor->IsA(ABoardTile::StaticClass()))
+		if (actor)
 		{
-			ABoardTile* tile = Cast<ABoardTile>(actor);
-			UE_LOG(LogTemp, Warning, TEXT("%s"), *tile->GetFName().ToString());
+			ABoardTile* tile = nullptr;
+			if (actor->IsA(APiece::StaticClass()))
+				tile = Cast<APiece>(actor)->myTile;
+			else if (actor->IsA(ABoardTile::StaticClass()))
+				tile = Cast<ABoardTile>(actor);
 
-			if (highlightTile != tile)
-			{
-				if (highlightTile)
-					highlightTile->Light(false);
-
-				highlightTile = tile;
-				highlightTile->Light(true);
-			}
-
-			if (highlightCube)
-			{
-				FVector pos = tile->GetActorLocation();
-				pos.Z = TraceResult.ImpactPoint.Z;
-				highlightCube->SetActorLocation(pos);
-			}
+			if (tile && highlightTile != tile)
+				HighLightTile(tile);
 		}
+		else
+			UnLightTile();
+	}
+	else 
+		UnLightTile();
+}
+
+void AChessController::HighLightTile(ABoardTile* tile)
+{
+	if (highlightTile)
+		highlightTile->Light(false);
+
+	highlightTile = tile;
+	highlightTile->Light(true);
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *tile->GetFName().ToString());
+}
+
+void AChessController::UnLightTile()
+{
+	if (highlightTile)
+	{
+		highlightTile->Light(false);
+		highlightTile = nullptr;
 	}
 }

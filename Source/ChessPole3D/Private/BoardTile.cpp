@@ -27,6 +27,8 @@ void ABoardTile::Spawn(FVector2D coord, FTransform transform, bool white)
 	}
 
 	defaultMat = TileMesh->GetMaterial(0);
+	lightMat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/HighLightedTile"));
+	movePatternMat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/MovePatternTile"));
 }
 
 void ABoardTile::PlacePiece(APiece* piece)
@@ -39,7 +41,18 @@ void ABoardTile::Light(bool b)
 {
 	UMaterialInterface* mat = nullptr;
 	if (b)
-		mat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/HighLightedTile"));
+		mat = lightMat;
+	else
+		mat = defaultMat;
+
+	TileMesh->SetMaterial(0, mat);
+}
+
+void ABoardTile::ShowPattern(bool b)
+{
+	UMaterialInterface* mat = nullptr;
+	if (b)
+		mat = movePatternMat;
 	else
 		mat = defaultMat;
 

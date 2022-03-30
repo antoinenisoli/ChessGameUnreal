@@ -36,7 +36,7 @@ void ABoard::GenerateBoard()
 
 ABoardTile* ABoard::GetTileAt(int x, int y)
 {
-    for each (ABoardTile* tile in tiles)
+    for (ABoardTile* tile : tiles)
     {
         if (tile->coordinates == FVector2D(x, y))
             return tile;

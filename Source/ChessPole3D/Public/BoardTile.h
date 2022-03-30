@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Pieces/Piece.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "BoardTile.generated.h"
@@ -17,6 +16,7 @@ public:
 	void Spawn(FVector2D coord, FTransform transform, bool white);
 	void PlacePiece(APiece* piece);
 	void Light(bool b);
+	void ShowPattern(bool b);
 
 public:
 	bool occupied;
@@ -29,4 +29,8 @@ public:
 private:
 	UPROPERTY()
 		UMaterialInterface* defaultMat;
+	UPROPERTY()
+		UMaterialInterface* lightMat;
+	UPROPERTY()
+		UMaterialInterface* movePatternMat;
 };
