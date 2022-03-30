@@ -7,7 +7,7 @@ APiece::APiece()
     RootComponent->bVisualizeComponent = true;
 
     PieceMesh = CreateDefaultSubobject<UStaticMeshComponent>("PieceMesh");
-    PieceMesh->AttachToComponent( RootComponent, FAttachmentTransformRules::KeepRelativeTransform );
+    PieceMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 void APiece::SetColor(bool iIsWhite)
@@ -20,6 +20,7 @@ void APiece::Select()
 {
     UMaterialInterface* material = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/selectedMat"));
     PieceMesh->SetMaterial(0, material);
+    ShowMovePattern();
 }
 
 void APiece::Unselect()
@@ -36,17 +37,6 @@ void APiece::ManageMaterial()
         mat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/BlackTile"));
 
     PieceMesh->SetMaterial(0, mat);
-}
-<<<<<<< Updated upstream
-=======
-
-void APiece::SetNewTile(ABoardTile* newTile)
-{
-    myTile = newTile;
-    FVector position = myTile->GetActorLocation();
-    position.Z = GetActorLocation().Z;
-    SetActorLocation(position);
-    Unselect();
 }
 
 void APiece::ShowMovePattern()
@@ -72,4 +62,3 @@ TArray<FIntPoint> APiece::GetAvailableCells()
 
     return targetCoordinates;
 }
->>>>>>> Stashed changes
