@@ -10,4 +10,5 @@ class CHESSPOLE3D_API AChessBishop : public APiece
 	
 public:
 	AChessBishop();
+	TArray<FMove> GetMoves() override;
 };

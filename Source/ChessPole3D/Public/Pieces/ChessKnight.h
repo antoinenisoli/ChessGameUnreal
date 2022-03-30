@@ -16,4 +16,5 @@ class CHESSPOLE3D_API AChessKnight : public APiece
 	
 public:
 	AChessKnight();
+	TArray<FMove> GetMoves() override;
 };

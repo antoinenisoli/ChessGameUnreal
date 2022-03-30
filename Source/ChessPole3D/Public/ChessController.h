@@ -4,6 +4,7 @@
 #include "ChessPlayer.h"
 #include "Pieces/Piece.h"
 #include "BoardTile.h"
+#include "Board.h"
 #include "ChessController.generated.h"
 
 UCLASS()
@@ -20,7 +21,7 @@ public:
 	void Tick(float DeltaTime);
 	void HighLightTile(ABoardTile* tile);
 	void UnLightTile();
-	void Init();
+	void Init(ABoard* _board);
 	void CheckTiles();
 	AChessPlayer* GetCurrentPlayer();
 
@@ -31,6 +32,7 @@ private:
 	FOnTurnEndDelegate TurnEndDeletegate;
 
 public:
+	ABoard* board;
 	APiece* selectedPiece;
 	ABoardTile* highlightTile;
 	ABoardTile* lastTile;

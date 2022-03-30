@@ -12,6 +12,9 @@ APiece::APiece()
 
 void APiece::SetNewTile(ABoardTile* newTile)
 {
+    if (myTile)
+        myTile->PlacePiece(nullptr);
+
     myTile = newTile;
     FVector position = myTile->GetActorLocation();
     position.Z = GetActorLocation().Z;
@@ -41,9 +44,9 @@ void APiece::ManageMaterial()
 {
     UMaterialInterface* mat = nullptr;
     if (IsWhite)
-        mat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/WhiteTile"));
+        mat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/WhitePawn"));
     else
-        mat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/BlackTile"));
+        mat = LoadObject<UMaterialInterface>(this, TEXT("/Game/Materials/BlackPawn"));
 
     PieceMesh->SetMaterial(0, mat);
 }
@@ -69,19 +72,5 @@ void APiece::ShowMovePattern()
 
 TArray<FMove> APiece::GetMoves()
 {
-    TArray<FMove> myMoves;
-    if (myTeam == 0)
-    {
-        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X, myTile->coordinates.Y - 1), true, false));
-        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X + 1, myTile->coordinates.Y - 1), true, true));
-        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X - 1, myTile->coordinates.Y - 1), true, true));
-    }
-    else
-    {
-        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X, myTile->coordinates.Y + 1), true, false));
-        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X + 1, myTile->coordinates.Y + 1), true, true));
-        myMoves.Add(FMove(FIntPoint(myTile->coordinates.X - 1, myTile->coordinates.Y + 1), true, true));
-    }
-
-    return myMoves;
+    return TArray<FMove>();
 }

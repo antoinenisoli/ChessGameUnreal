@@ -18,9 +18,9 @@ void AChessController::SetupInputComponent()
 	InputComponent->BindAction("RightMouseClick", IE_Pressed, this, &AChessController::RightClick);
 }
 
-void AChessController::Init()
+void AChessController::Init(ABoard* _board)
 {
-	
+	board = _board;
 }
 
 void AChessController::CheckTiles()
@@ -57,9 +57,14 @@ AChessController::FOnTurnEndDelegate& AChessController::OnTurnEndDelegate()
 
 void AChessController::LeftClick()
 {
+	for (ABoardTile* tile : board->tiles)
+		tile->Light(false, "");
+
 	FHitResult TraceResult(ForceInit);
 	GetHitResultUnderCursor(ECollisionChannel::ECC_WorldDynamic, false, TraceResult);
 	AActor* actor = TraceResult.GetActor();
+	for (ABoardTile* tile : board->tiles)
+		tile->Light(false, "");
 
 	if (selectedPiece)
 	{
@@ -89,6 +94,9 @@ void AChessController::RightClick()
 		if (actor && actor->IsA(ABoardTile::StaticClass()))
 		{
 			ABoardTile* tile = Cast<ABoardTile>(actor);
+			if (tile->occupied && tile->myPiece->myTeam == selectedPiece->myTeam)
+				return;
+
 			TArray<FMove> _array = selectedPiece->GetMoves();
 			for (FMove move : _array)
 			{
@@ -101,8 +109,6 @@ void AChessController::RightClick()
 							tile->myPiece->Destroy();
 							tile->PlacePiece(nullptr);
 						}
-						else
-							return;
 					}
 
 					tile->PlacePiece(selectedPiece);

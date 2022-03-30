@@ -16,4 +16,5 @@ class CHESSPOLE3D_API AChessQueen : public APiece
 	
 public:
 	AChessQueen();
+	TArray<FMove> GetMoves() override;
 };

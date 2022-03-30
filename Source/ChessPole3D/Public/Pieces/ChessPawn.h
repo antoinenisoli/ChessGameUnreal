@@ -16,4 +16,5 @@ class CHESSPOLE3D_API AChessPawn : public APiece
 	
 public:
 	AChessPawn();
+	TArray<FMove> GetMoves() override;
 };

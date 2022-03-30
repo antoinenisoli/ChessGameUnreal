@@ -28,7 +28,7 @@ void AChessGameModeBase::BeginPlay()
     Board->Init(8, 8, 100);
 
     SetupBoard();
-    ChessController->Init();
+    ChessController->Init(Board);
     ChessController->Possess(PlayerOne);
 }
 
@@ -93,8 +93,11 @@ void AChessGameModeBase::AddPiece(int iX, int iY, bool iIsWhite)
     piece->SetColor(iIsWhite);
     piece->AttachToActor(Board, FAttachmentTransformRules::KeepRelativeTransform);
     piece->myBoard = Board;
-    piece->myTile = Board->GetTileAt(iX, iY);
     piece->myTeam = iIsWhite;
+
+    ABoardTile* tile = Board->GetTileAt(iX, iY);
+    tile->PlacePiece(piece);
+    piece->myTile = tile;
 }
 
 FTransform AChessGameModeBase::GetPieceTransform(int iX, int iY, int iRotationDegrees)
